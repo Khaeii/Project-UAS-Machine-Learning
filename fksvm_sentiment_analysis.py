@@ -47,7 +47,7 @@ def load_dataset(path, sample_size=None):
     df["label"] = (df["polarity"] == 4).astype(int)
 
     if sample_size and sample_size < len(df):
-        n_each = sample_size // 2
+        n_each = sample_size // 2 
         df_neg = df[df["label"]==0].sample(n=n_each, random_state=RANDOM_STATE)
         df_pos = df[df["label"]==1].sample(n=n_each, random_state=RANDOM_STATE)
         df = pd.concat([df_neg, df_pos], ignore_index=True)
@@ -167,7 +167,6 @@ class PLSA_SVM:
         Z_test = self.tm.get_pz_d(X)
         return self.clf.predict(Z_test)
 
-
 class FK_SVM:
     def __init__(self, **kw):
         self.count = CountVectorizer(
@@ -206,8 +205,7 @@ class FK_SVM:
         pz_d_te = self.tm.get_pz_d(X_count)
 
         # Fisher phi test 
-        phi_test, _ = compute_fisher_phi(
-            self.tm, X_count, pz_d_te, fisher_info_ref=self.fi_train)
+        phi_test, _ = compute_fisher_phi(self.tm, X_count, pz_d_te, fisher_info_ref=self.fi_train)
 
         X_tfidf_te = normalize(self.tfidf.transform(texts), norm='l2')
 
@@ -354,12 +352,7 @@ def plot_figure2(res, pl):
               "figure2_experiment2.png",
               "Figure 2. Training % Comparison: FK-SVM vs HIST-SVM vs PLSA-SVM")
 
-
-
-# ─────────────────────────────────────────────
 # MAIN
-# ─────────────────────────────────────────────
-
 def main():
     try:
         df = load_dataset(DATASET_PATH, sample_size=SAMPLE_SIZE)
